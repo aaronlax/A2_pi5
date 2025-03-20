@@ -1,0 +1,32 @@
+# Python virtual environment
+venv/
+ENV/
+env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Build directories
+build/
+dist/
+
+# Large data files
+*.bin
+*.dat
+*.raw
+/hardware/camera/captures/
+/hardware/audio/recordings/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# Git directory
+.git/ 
