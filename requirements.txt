@@ -1,16 +1,23 @@
-# Core dependencies
-numpy==1.24.3
-requests==2.31.0
-pyserial==3.5
-pyyaml==6.0.1
-pillow==10.0.0
-
-# Hardware communication
-# Uncomment based on hardware available
-# pyrealsense2==2.53.1  # For Intel RealSense camera
-# RPi.GPIO==0.7.1       # For Raspberry Pi GPIO (servo control)
-# adafruit-circuitpython-servokit==1.3.10  # Alternative for servo control
-
-# Audio processing
-# pyaudio==0.2.13       # For audio capture
-# librosa==0.10.1       # For audio processing 
+websockets>=10.0
+asyncio>=3.4.3
+python-socketio>=5.0.0
+numpy>=1.19.0
+opencv-python>=4.5.0
+# Libraries for I2C and hardware interaction
+adafruit-blinka>=7.0.0
+adafruit-circuitpython-pca9685>=3.4.0
+adafruit-circuitpython-servokit>=1.3.0
+# GPIO access libraries (newer libraries compatible with Pi 5)
+gpiod>=1.5.0
+RPi.GPIO>=0.7.0
+gpiozero>=2.0
+# I2C utilities
+smbus2>=0.4.1
+# Intel RealSense D455 support
+# Note: pyrealsense2 will be installed separately in the start script
+# as it might need special handling on Raspberry Pi
+# Additional libraries for depth camera processing
+open3d>=0.16.0       # For 3D point cloud processing
+transforms3d>=0.4.0  # For 3D transformations
+scipy>=1.7.0         # Scientific computing (signal processing)
+pyusb>=1.2.0         # USB device access (helpful for D455 connectivity) 
