@@ -16,6 +16,7 @@ from queue import Queue, Empty
 import statistics
 from typing import Dict, List, Optional, Any
 import random
+import struct
 
 # Import hardware modules
 from hardware.camera.realsense_camera import RealSenseCamera
@@ -141,6 +142,8 @@ class WebSocketClient:
     
     async def process_frames(self):
         """Process and send frames from the camera"""
+        use_binary_mode = True  # Set to True to use binary transfer
+        
         while self.connected and not self.stopping:
             try:
                 # Get a frame from the camera
@@ -164,50 +167,54 @@ class WebSocketClient:
                         fps = 30.0
                     self.last_frame_time = now
                     
-                    # Encode frame to JPEG
-                    encode_params = [cv2.IMWRITE_JPEG_QUALITY, config.JPEG_QUALITY]
-                    ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
-                    
-                    if not ret:
-                        logger.error("Failed to encode frame")
-                        continue
-                    
-                    # Convert to base64 for sending via WebSocket
-                    frame_data = base64.b64encode(jpeg.tobytes()).decode('utf-8')
-                    
-                    # Get additional camera data if available
-                    camera_info = {}
-                    depth_data = None
-                    
-                    if hasattr(self.camera, 'get_camera_info'):
-                        camera_info = self.camera.get_camera_info()
-                    
-                    if hasattr(self.camera, 'get_depth_frame'):
-                        depth_frame = self.camera.get_depth_frame()
-                        if depth_frame is not None:
-                            # Encode depth frame as base64
-                            depth_png = cv2.imencode('.png', depth_frame)[1].tobytes()
-                            depth_data = base64.b64encode(depth_png).decode('utf-8')
-                    
-                    # Create frame message
-                    frame_message = {
-                        "type": "frame",
-                        "frame_id": self.frame_count,
-                        "timestamp": time.time(),
-                        "image": frame_data,
-                        "depth_data": depth_data,
-                        "camera_info": {
-                            "model": camera_info.get("name", "D455"),
-                            "serial": camera_info.get("serial", "unknown"),
-                            "resolution": [self.camera.width, self.camera.height]
-                        },
-                        "depth_scale": 0.001,  # Meters per unit
-                        "fps": fps
-                    }
-                    
-                    # Send the frame
-                    await self.websocket.send(json.dumps(frame_message))
-                    logger.debug(f"Sent frame {self.frame_count}")
+                    if use_binary_mode:
+                        # Send frame as binary data (much more efficient)
+                        await send_binary_frame(self.websocket, frame, self.frame_count)
+                    else:
+                        # Encode frame to JPEG
+                        encode_params = [cv2.IMWRITE_JPEG_QUALITY, config.JPEG_QUALITY]
+                        ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
+                        
+                        if not ret:
+                            logger.error("Failed to encode frame")
+                            continue
+                        
+                        # Convert to base64 for sending via WebSocket
+                        frame_data = base64.b64encode(jpeg.tobytes()).decode('utf-8')
+                        
+                        # Get additional camera data if available
+                        camera_info = {}
+                        depth_data = None
+                        
+                        if hasattr(self.camera, 'get_camera_info'):
+                            camera_info = self.camera.get_camera_info()
+                        
+                        if hasattr(self.camera, 'get_depth_frame'):
+                            depth_frame = self.camera.get_depth_frame()
+                            if depth_frame is not None:
+                                # Encode depth frame as base64
+                                depth_png = cv2.imencode('.png', depth_frame)[1].tobytes()
+                                depth_data = base64.b64encode(depth_png).decode('utf-8')
+                        
+                        # Create frame message
+                        frame_message = {
+                            "type": "frame",
+                            "frame_id": self.frame_count,
+                            "timestamp": time.time(),
+                            "image": frame_data,
+                            "depth_data": depth_data,
+                            "camera_info": {
+                                "model": camera_info.get("name", "D455"),
+                                "serial": camera_info.get("serial", "unknown"),
+                                "resolution": [self.camera.width, self.camera.height]
+                            },
+                            "depth_scale": 0.001,  # Meters per unit
+                            "fps": fps
+                        }
+                        
+                        # Send the frame
+                        await self.websocket.send(json.dumps(frame_message))
+                        logger.debug(f"Sent frame {self.frame_count}")
                 
                 # Sleep briefly to avoid overwhelming the system
                 await asyncio.sleep(0.01)
@@ -504,6 +511,38 @@ class WebSocketClient:
                 "available": 0,
                 "used_percent": 0
             }
+
+async def send_binary_frame(websocket, frame, frame_id):
+    """Send a frame as binary data instead of base64 JSON for better performance"""
+    try:
+        # Encode frame to JPEG
+        encode_params = [cv2.IMWRITE_JPEG_QUALITY, config.JPEG_QUALITY]
+        ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
+        
+        if not ret:
+            logger.error("Failed to encode frame")
+            return False
+        
+        # Create binary message:
+        # First 4 bytes: frame_id (uint32)
+        # Next 4 bytes: timestamp (float32)
+        # Rest: JPEG data
+        frame_id_bytes = frame_id.to_bytes(4, byteorder='little')
+        timestamp = time.time()
+        timestamp_bytes = struct.pack('<f', timestamp)
+        
+        # Combine header and image data
+        header = frame_id_bytes + timestamp_bytes
+        binary_data = header + jpeg.tobytes()
+        
+        # Send as binary
+        await websocket.send(binary_data)
+        logger.debug(f"Sent binary frame {frame_id}, size: {len(binary_data)} bytes")
+        return True
+    
+    except Exception as e:
+        logger.error(f"Error sending binary frame: {e}")
+        return False
 
 def init_system():
     """Initialize all system components"""

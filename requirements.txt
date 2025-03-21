@@ -21,3 +21,6 @@ open3d>=0.16.0       # For 3D point cloud processing
 transforms3d>=0.4.0  # For 3D transformations
 scipy>=1.7.0         # Scientific computing (signal processing)
 pyusb>=1.2.0         # USB device access (helpful for D455 connectivity) 
+# For codebase summarization
+python-dotenv>=1.0.0
+openai>=1.0.0 
