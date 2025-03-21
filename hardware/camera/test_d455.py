@@ -7,6 +7,7 @@ This script verifies that the D455 camera is properly connected and functioning
 import sys
 import time
 import argparse
+import os
 
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description="Intel RealSense D455 Camera Test")
@@ -40,6 +41,9 @@ except ImportError:
     print("For Raspberry Pi, you may need to build from source or use a pre-built wheel.")
     print("See: https://github.com/IntelRealSense/librealsense/tree/master/wrappers/python")
     sys.exit(1)
+
+# Add at beginning of script
+os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 
 # Function to colorize depth frame
 def colorize_depth(depth_image, min_depth=0.1, max_depth=10.0):
@@ -117,7 +121,6 @@ try:
     
     # Create directory for saving images if needed
     if args.record:
-        import os
         from datetime import datetime
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

@@ -14,7 +14,7 @@ LOG_LEVEL = logging.DEBUG if DEBUG else logging.INFO
 SIMULATION_MODE = os.environ.get('SIMULATION_MODE', 'False').lower() == 'true'
 
 # Server settings
-SERVER_ADDRESS = os.environ.get('SERVER_ADDRESS', '192.168.1.100')  # Update this to your PC's IP
+SERVER_ADDRESS = os.environ.get('SERVER_ADDRESS', '192.168.50.86')  # WebSocket server address
 SERVER_PORT = int(os.environ.get('SERVER_PORT', '5000'))
 
 # Camera settings

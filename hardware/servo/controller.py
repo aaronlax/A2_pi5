@@ -81,7 +81,33 @@ class ServoController:
         except Exception as e:
             self.logger.error(f"Error cleaning up servo controller: {e}")
     
-    def set_position(self, servo_name, degrees):
+    def set_position(self, pan=None, tilt=None, roll=None):
+        """
+        Set the position of multiple servos at once.
+        
+        Args:
+            pan (float, optional): Pan position in degrees
+            tilt (float, optional): Tilt position in degrees
+            roll (float, optional): Roll position in degrees
+            
+        Returns:
+            tuple: Current positions (pan, tilt, roll)
+        """
+        if pan is not None:
+            self.set_servo_position('pan', pan)
+        
+        if tilt is not None:
+            self.set_servo_position('tilt', tilt)
+            
+        # Roll is not implemented in this basic version
+        
+        return (
+            self.get_position('pan'),
+            self.get_position('tilt'),
+            90  # Default roll position
+        )
+    
+    def set_servo_position(self, servo_name, degrees):
         """
         Set a servo to a specific position in degrees.
         
@@ -140,4 +166,41 @@ class ServoController:
             self.logger.error(f"Unknown servo: {servo_name}")
             return None
             
-        return self.current_positions.get(servo_name) 
+        return self.current_positions.get(servo_name)
+    
+    def center(self):
+        """
+        Center all servos to their middle positions.
+        
+        Returns:
+            tuple: Current positions (pan, tilt, roll)
+        """
+        self.set_position('pan', 90)
+        self.set_position('tilt', 90)
+        
+        return (
+            self.get_position('pan'),
+            self.get_position('tilt'),
+            90  # Default roll position
+        )
+    
+    def get_status(self):
+        """
+        Get the current status of all servos.
+        
+        Returns:
+            dict: Servo status information
+        """
+        return {
+            "positions": {
+                "pan": self.get_position('pan'),
+                "tilt": self.get_position('tilt'),
+                "roll": 90  # Default roll position
+            },
+            "initialized": self.initialized
+        }
+    
+    def shutdown(self):
+        """Shut down the servo controller."""
+        self.center()  # Center servos before shutdown
+        self.cleanup() 

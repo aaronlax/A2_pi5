@@ -185,13 +185,9 @@ class WebSocketClient:
                     if hasattr(self.camera, 'get_depth_frame'):
                         depth_frame = self.camera.get_depth_frame()
                         if depth_frame is not None:
-                            # Just send basic depth stats to reduce data size
-                            depth_data = {
-                                "available": True,
-                                "min_depth": float(np.min(depth_frame)) if np.min(depth_frame) > 0 else 0.0,
-                                "max_depth": float(np.max(depth_frame)),
-                                "avg_depth": float(np.mean(depth_frame[depth_frame > 0])) if np.any(depth_frame > 0) else 0.0
-                            }
+                            # Encode depth frame as base64
+                            depth_png = cv2.imencode('.png', depth_frame)[1].tobytes()
+                            depth_data = base64.b64encode(depth_png).decode('utf-8')
                     
                     # Create frame message
                     frame_message = {
@@ -199,13 +195,15 @@ class WebSocketClient:
                         "frame_id": self.frame_count,
                         "timestamp": time.time(),
                         "image": frame_data,
-                        "fps": fps,
-                        "camera_info": camera_info
+                        "depth_data": depth_data,
+                        "camera_info": {
+                            "model": camera_info.get("name", "D455"),
+                            "serial": camera_info.get("serial", "unknown"),
+                            "resolution": [self.camera.width, self.camera.height]
+                        },
+                        "depth_scale": 0.001,  # Meters per unit
+                        "fps": fps
                     }
-                    
-                    # Add depth data if available
-                    if depth_data:
-                        frame_message["depth_data"] = depth_data
                     
                     # Send the frame
                     await self.websocket.send(json.dumps(frame_message))
@@ -509,6 +507,7 @@ class WebSocketClient:
 
 def init_system():
     """Initialize all system components"""
+    global SIMULATION_MODE
     logger.info("Initializing system components...")
     
     # Initialize camera
@@ -541,21 +540,23 @@ def init_system():
     # Initialize servo controller
     logger.info("Initializing servo controller...")
     try:
-        servo_controller = ServoController(
-            pan_channel=config.PAN_CHANNEL,
-            tilt_channel=config.TILT_CHANNEL,
-            roll_channel=config.ROLL_CHANNEL,
-            pan_limits=config.PAN_LIMITS,
-            tilt_limits=config.TILT_LIMITS,
-            roll_limits=config.ROLL_LIMITS,
-            simulation_mode=SIMULATION_MODE
-        )
+        servo_config = {
+            'servo_pins': {
+                'pan': config.PAN_CHANNEL,
+                'tilt': config.TILT_CHANNEL
+            },
+            'min_pulse_width': 0.5,
+            'max_pulse_width': 2.5,
+            'frequency': 50
+        }
+        servo_controller = ServoController(config=servo_config)
+        servo_controller.initialize()
         logger.info("Servo controller initialized")
     except Exception as e:
         logger.error(f"Failed to initialize servo controller: {e}")
         logger.error(traceback.format_exc())
         logger.warning("Using simulated servo controller")
-        servo_controller = ServoController(simulation_mode=True)
+        servo_controller = ServoController()
     
     # Initialize audio detector
     logger.info("Initializing audio detector...")
