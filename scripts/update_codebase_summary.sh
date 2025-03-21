@@ -7,6 +7,25 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 cd "$ROOT_DIR"
 
+# Get the project name (use the directory name by default)
+PROJECT_NAME=${PROJECT_NAME:-$(basename "$(pwd)")}
+export PROJECT_NAME
+
+# Set environment variables if needed
+export EXCLUDE_PATTERNS_FILE="$SCRIPT_DIR/exclude_patterns.txt"
+
+# Check if .env file exists, create if not
+if [ ! -f ".env" ]; then
+    echo "Creating .env file..."
+    if [ -z "$OPENAI_API_KEY" ]; then
+        echo "Please enter your OpenAI API key:"
+        read API_KEY
+        echo "OPENAI_API_KEY=$API_KEY" > .env
+    else
+        echo "OPENAI_API_KEY=$OPENAI_API_KEY" > .env
+    fi
+fi
+
 # Check if virtual environment exists, create if not
 if [ ! -d "venv" ]; then
     echo "Creating virtual environment..."
@@ -21,9 +40,18 @@ fi
 mkdir -p logs outputs/summaries
 
 # Run the script
+echo "Generating codebase summary for $PROJECT_NAME..."
 python scripts/update_readme.py
 
-# Exit the virtual environment
-deactivate
+# Check if the script was successful
+if [ $? -ne 0 ]; then
+    echo "Error running script" >&2
+else
+    echo "Codebase summary update complete!"
+    if [ -f "README.md" ]; then
+        echo "Updated README.md file. You may want to review it."
+    fi
+fi
 
-echo "Codebase summary update complete!" 
+# Exit the virtual environment
+deactivate 

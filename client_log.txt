@@ -647,3 +647,152 @@ ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
 2025-03-21 09:13:17,970 - __main__ - INFO - Connected to WebSocket server successfully
 2025-03-21 09:13:17,970 - __main__ - INFO - Sending hello message to server
 2025-03-21 09:13:18,651 - __main__ - INFO - Server acknowledged connection with welcome message
+2025-03-21 09:20:09,265 - __main__ - INFO - Client terminated by user
+2025-03-21 09:20:09,265 - __main__ - INFO - Shutting down...
+2025-03-21 09:20:09,265 - __main__ - INFO - Stopping client...
+2025-03-21 09:20:09,269 - hardware.camera.realsense_camera - INFO - Stopping RealSense camera streaming...
+2025-03-21 09:20:11,202 - __main__ - INFO - Shutdown complete
+2025-03-21 09:20:11,227 - asyncio - ERROR - Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<WebSocketClient.process_frames() done, defined at /home/aaronlax/A2/client/client.py:143> exception=KeyboardInterrupt()>
+Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 735, in main
+    loop.run_until_complete(websocket_client.run_client())
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 640, in run_until_complete
+    self.run_forever()
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 607, in run_forever
+    self._run_once()
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1922, in _run_once
+    handle._run()
+  File "/usr/lib/python3.11/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/aaronlax/A2/client/client.py", line 150, in process_frames
+    color_frame = self.camera.get_color_frame()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/hardware/camera/realsense_camera.py", line 134, in get_color_frame
+    frames = self.pipeline.wait_for_frames()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+2025-03-21 09:40:02,542 - __main__ - INFO - A2 Pi Client v1.0.0
+2025-03-21 09:40:02,543 - __main__ - INFO - Server: 192.168.50.86:5000
+2025-03-21 09:40:02,543 - __main__ - INFO - Simulation mode: False
+2025-03-21 09:40:02,543 - __main__ - INFO - Initializing system components...
+2025-03-21 09:40:02,543 - __main__ - INFO - Initializing camera...
+2025-03-21 09:40:02,543 - hardware.camera.realsense_camera - INFO - Initializing RealSense camera: 640x480@30fps
+2025-03-21 09:40:02,575 - hardware.camera.realsense_camera - INFO - Found 1 RealSense device(s)
+2025-03-21 09:40:03,163 - hardware.camera.realsense_camera - INFO - Using device: Intel RealSense D455
+2025-03-21 09:40:03,167 - __main__ - INFO - Camera initialized successfully
+2025-03-21 09:40:03,167 - hardware.camera.realsense_camera - INFO - Starting RealSense camera streaming...
+2025-03-21 09:40:03,839 - hardware.camera.realsense_camera - INFO - RealSense camera streaming started
+2025-03-21 09:40:03,839 - __main__ - INFO - Initializing servo controller...
+2025-03-21 09:40:03,839 - hardware.servo.controller - INFO - Initializing servo controller...
+2025-03-21 09:40:03,839 - hardware.servo.controller - INFO - Servo controller initialized
+2025-03-21 09:40:03,840 - __main__ - INFO - Servo controller initialized
+2025-03-21 09:40:03,840 - __main__ - INFO - Initializing audio detector...
+2025-03-21 09:40:03,840 - __main__ - ERROR - Failed to initialize audio detector: AudioDetector.__init__() got an unexpected keyword argument 'simulation_mode'
+2025-03-21 09:40:03,840 - __main__ - WARNING - Audio detection will not be available
+2025-03-21 09:40:03,840 - __main__ - INFO - Initializing WebSocket client...
+2025-03-21 09:40:03,841 - __main__ - INFO - Starting WebSocket client...
+2025-03-21 09:40:03,842 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 09:40:03,849 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 09:40:03,849 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 09:40:03,849 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 09:40:03,872 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 09:40:03,874 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 09:40:03,874 - __main__ - INFO - Reconnecting in 8.8 seconds (attempt 2/10)...
+2025-03-21 09:40:12,711 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 09:40:12,718 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 09:40:12,719 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 09:40:12,719 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 09:40:12,723 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 09:40:12,725 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 09:40:12,725 - __main__ - INFO - Reconnecting in 12.7 seconds (attempt 3/10)...
+2025-03-21 09:40:25,392 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 09:40:25,399 - __main__ - INFO - Successfully connected to 192.168.50.86:5000
+2025-03-21 09:40:25,399 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 09:40:25,413 - __main__ - INFO - Connected to WebSocket server successfully
+2025-03-21 09:40:25,414 - __main__ - INFO - Sending hello message to server
+2025-03-21 09:40:25,430 - __main__ - INFO - Server acknowledged connection with welcome message
+2025-03-21 16:06:49,984 - __main__ - INFO - A2 Pi Client v1.0.0
+2025-03-21 16:06:49,985 - __main__ - INFO - Server: 192.168.50.86:5000
+2025-03-21 16:06:49,985 - __main__ - INFO - Simulation mode: False
+2025-03-21 16:06:49,985 - __main__ - INFO - Initializing system components...
+2025-03-21 16:06:49,985 - __main__ - INFO - Initializing camera...
+2025-03-21 16:06:49,985 - hardware.camera.realsense_camera - INFO - Initializing RealSense camera: 640x480@30fps
+2025-03-21 16:06:50,020 - hardware.camera.realsense_camera - INFO - Found 1 RealSense device(s)
+2025-03-21 16:06:50,549 - hardware.camera.realsense_camera - INFO - Using device: Intel RealSense D455
+2025-03-21 16:06:50,554 - __main__ - INFO - Camera initialized successfully
+2025-03-21 16:06:50,554 - hardware.camera.realsense_camera - INFO - Starting RealSense camera streaming...
+2025-03-21 16:06:51,232 - hardware.camera.realsense_camera - INFO - RealSense camera streaming started
+2025-03-21 16:06:51,233 - __main__ - INFO - Initializing servo controller...
+2025-03-21 16:06:51,233 - hardware.servo.controller - INFO - Initializing servo controller...
+2025-03-21 16:06:51,233 - hardware.servo.controller - INFO - Servo controller initialized
+2025-03-21 16:06:51,233 - __main__ - INFO - Servo controller initialized
+2025-03-21 16:06:51,233 - __main__ - INFO - Initializing audio detector...
+2025-03-21 16:06:51,233 - __main__ - ERROR - Failed to initialize audio detector: AudioDetector.__init__() got an unexpected keyword argument 'simulation_mode'
+2025-03-21 16:06:51,233 - __main__ - WARNING - Audio detection will not be available
+2025-03-21 16:06:51,233 - __main__ - INFO - Initializing WebSocket client...
+2025-03-21 16:06:51,234 - __main__ - INFO - Starting WebSocket client...
+2025-03-21 16:06:51,236 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 16:06:51,361 - __main__ - INFO - Successfully connected to 192.168.50.86:5000
+2025-03-21 16:06:51,361 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 16:06:51,398 - __main__ - INFO - Connected to WebSocket server successfully
+2025-03-21 16:06:51,399 - __main__ - INFO - Sending hello message to server
+2025-03-21 16:06:51,958 - __main__ - INFO - Server acknowledged connection with welcome message

@@ -1,0 +1,58 @@
+# Exclusion patterns for codebase summarization
+# One pattern per line - can be directories, file extensions, or specific files
+
+# Common directories to exclude
+venv/
+__pycache__/
+.git/
+.github/
+.vscode/
+node_modules/
+.cache/
+build/
+dist/
+.next/
+*.egg-info/
+
+# Outputs and logs
+outputs/
+logs/
+
+# Scripts directory (typically not part of core codebase)
+scripts/
+
+# Large data files
+*.csv
+*.tsv
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+*.feather
+*.npy
+
+# Binary files
+*.pyc
+*.so
+*.dll
+*.exe
+*.bin
+*.dat
+*.pkl
+
+# Compiled files
+*.class
+*.o
+
+# Temporary files
+.DS_Store
+._.DS_Store
+*~
+*.tmp
+*.bak
+*.swp
+.env
+
+# Add your custom exclusions below
+# example_folder_to_exclude/
+# example_file_to_exclude.txt
