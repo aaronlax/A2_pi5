@@ -1,0 +1,649 @@
+2025-03-21 08:32:44,382 - __main__ - INFO - A2 Pi Client v1.0.0
+2025-03-21 08:32:44,382 - __main__ - INFO - Server: 192.168.50.86:5000
+2025-03-21 08:32:44,382 - __main__ - INFO - Simulation mode: False
+2025-03-21 08:32:44,382 - __main__ - INFO - Initializing system components...
+2025-03-21 08:32:44,383 - __main__ - INFO - Initializing camera...
+2025-03-21 08:32:44,383 - hardware.camera.realsense_camera - INFO - Initializing RealSense camera: 640x480@30fps
+2025-03-21 08:32:44,414 - hardware.camera.realsense_camera - INFO - Found 1 RealSense device(s)
+2025-03-21 08:32:44,997 - hardware.camera.realsense_camera - INFO - Using device: Intel RealSense D455
+2025-03-21 08:32:45,000 - __main__ - INFO - Camera initialized successfully
+2025-03-21 08:32:45,000 - hardware.camera.realsense_camera - INFO - Starting RealSense camera streaming...
+2025-03-21 08:32:45,671 - hardware.camera.realsense_camera - INFO - RealSense camera streaming started
+2025-03-21 08:32:45,672 - __main__ - INFO - Initializing servo controller...
+2025-03-21 08:32:45,672 - hardware.servo.controller - INFO - Initializing servo controller...
+2025-03-21 08:32:45,672 - hardware.servo.controller - INFO - Servo controller initialized
+2025-03-21 08:32:45,672 - __main__ - INFO - Servo controller initialized
+2025-03-21 08:32:45,672 - __main__ - INFO - Initializing audio detector...
+2025-03-21 08:32:45,672 - __main__ - ERROR - Failed to initialize audio detector: AudioDetector.__init__() got an unexpected keyword argument 'simulation_mode'
+2025-03-21 08:32:45,672 - __main__ - WARNING - Audio detection will not be available
+2025-03-21 08:32:45,672 - __main__ - INFO - Initializing WebSocket client...
+2025-03-21 08:32:45,673 - __main__ - INFO - Starting WebSocket client...
+2025-03-21 08:32:45,674 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:32:45,683 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:32:45,683 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:32:45,683 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:32:45,705 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:32:45,707 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:32:45,708 - __main__ - INFO - Reconnecting in 8.1 seconds (attempt 2/10)...
+2025-03-21 08:32:53,771 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:32:53,778 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:32:53,779 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:32:53,779 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:32:53,783 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:32:53,784 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:32:53,784 - __main__ - INFO - Reconnecting in 11.7 seconds (attempt 3/10)...
+2025-03-21 08:33:05,493 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:33:05,500 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:33:05,501 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:33:05,501 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:33:05,505 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:33:05,506 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:33:05,506 - __main__ - INFO - Reconnecting in 17.5 seconds (attempt 4/10)...
+2025-03-21 08:33:23,005 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:33:23,011 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:33:23,012 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:33:23,012 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:33:23,015 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:33:23,017 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:33:23,017 - __main__ - INFO - Reconnecting in 25.7 seconds (attempt 5/10)...
+2025-03-21 08:33:48,740 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:33:48,747 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:33:48,748 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:33:48,748 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:33:48,752 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:33:48,753 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:33:48,754 - __main__ - INFO - Reconnecting in 38.0 seconds (attempt 6/10)...
+2025-03-21 08:34:26,782 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:34:26,785 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:34:26,785 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:34:26,785 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:34:26,789 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:34:26,790 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:34:26,791 - __main__ - INFO - Reconnecting in 58.1 seconds (attempt 7/10)...
+2025-03-21 08:35:24,940 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:35:24,944 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:35:24,945 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:35:24,945 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:35:24,949 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:35:24,950 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:35:24,950 - __main__ - INFO - Reconnecting in 60.8 seconds (attempt 8/10)...
+2025-03-21 08:36:25,843 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:36:25,850 - __main__ - INFO - Successfully connected to 192.168.50.86:5000
+2025-03-21 08:36:25,850 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:36:25,861 - __main__ - INFO - Connected to WebSocket server successfully
+2025-03-21 08:36:25,861 - __main__ - INFO - Sending hello message to server
+2025-03-21 08:36:25,867 - __main__ - INFO - Server acknowledged connection with welcome message
+2025-03-21 08:39:05,459 - __main__ - WARNING - Connection closed during receive
+2025-03-21 08:39:05,459 - __main__ - INFO - Reconnecting in 60.4 seconds (attempt 9/10)...
+2025-03-21 08:40:05,952 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:40:05,959 - __main__ - INFO - Successfully connected to 192.168.50.86:5000
+2025-03-21 08:40:05,959 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:40:05,969 - __main__ - INFO - Connected to WebSocket server successfully
+2025-03-21 08:40:05,969 - __main__ - INFO - Sending hello message to server
+2025-03-21 08:40:05,979 - __main__ - INFO - Server acknowledged connection with welcome message
+2025-03-21 08:40:50,140 - __main__ - WARNING - Connection closed during receive
+2025-03-21 08:40:50,140 - __main__ - INFO - Reconnecting in 60.6 seconds (attempt 10/10)...
+2025-03-21 08:41:40,104 - __main__ - INFO - Client terminated by user
+2025-03-21 08:41:40,105 - __main__ - INFO - Shutting down...
+2025-03-21 08:41:40,105 - __main__ - INFO - Stopping client...
+2025-03-21 08:41:40,105 - hardware.camera.realsense_camera - INFO - Stopping RealSense camera streaming...
+2025-03-21 08:41:43,110 - hardware.camera.realsense_camera - INFO - RealSense camera streaming stopped
+2025-03-21 08:41:43,110 - __main__ - INFO - Shutdown complete
+2025-03-21 08:41:46,596 - __main__ - INFO - A2 Pi Client v1.0.0
+2025-03-21 08:41:46,597 - __main__ - INFO - Server: 192.168.50.86:5000
+2025-03-21 08:41:46,597 - __main__ - INFO - Simulation mode: False
+2025-03-21 08:41:46,597 - __main__ - INFO - Initializing system components...
+2025-03-21 08:41:46,597 - __main__ - INFO - Initializing camera...
+2025-03-21 08:41:46,597 - hardware.camera.realsense_camera - INFO - Initializing RealSense camera: 640x480@30fps
+2025-03-21 08:41:46,628 - hardware.camera.realsense_camera - INFO - Found 1 RealSense device(s)
+2025-03-21 08:41:47,207 - hardware.camera.realsense_camera - INFO - Using device: Intel RealSense D455
+2025-03-21 08:41:47,210 - __main__ - INFO - Camera initialized successfully
+2025-03-21 08:41:47,211 - hardware.camera.realsense_camera - INFO - Starting RealSense camera streaming...
+2025-03-21 08:41:47,882 - hardware.camera.realsense_camera - INFO - RealSense camera streaming started
+2025-03-21 08:41:47,882 - __main__ - INFO - Initializing servo controller...
+2025-03-21 08:41:47,883 - hardware.servo.controller - INFO - Initializing servo controller...
+2025-03-21 08:41:47,883 - hardware.servo.controller - INFO - Servo controller initialized
+2025-03-21 08:41:47,883 - __main__ - INFO - Servo controller initialized
+2025-03-21 08:41:47,883 - __main__ - INFO - Initializing audio detector...
+2025-03-21 08:41:47,883 - __main__ - ERROR - Failed to initialize audio detector: AudioDetector.__init__() got an unexpected keyword argument 'simulation_mode'
+2025-03-21 08:41:47,883 - __main__ - WARNING - Audio detection will not be available
+2025-03-21 08:41:47,883 - __main__ - INFO - Initializing WebSocket client...
+2025-03-21 08:41:47,883 - __main__ - INFO - Starting WebSocket client...
+2025-03-21 08:41:47,885 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:41:47,892 - __main__ - INFO - Successfully connected to 192.168.50.86:5000
+2025-03-21 08:41:47,892 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:41:47,918 - __main__ - INFO - Connected to WebSocket server successfully
+2025-03-21 08:41:47,918 - __main__ - INFO - Sending hello message to server
+2025-03-21 08:41:48,596 - __main__ - INFO - Server acknowledged connection with welcome message
+2025-03-21 08:47:55,767 - __main__ - WARNING - Connection closed during receive
+2025-03-21 08:47:55,768 - __main__ - INFO - Reconnecting in 8.6 seconds (attempt 2/10)...
+2025-03-21 08:48:04,404 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:48:04,410 - __main__ - INFO - Successfully connected to 192.168.50.86:5000
+2025-03-21 08:48:04,410 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:48:04,418 - __main__ - INFO - Connected to WebSocket server successfully
+2025-03-21 08:48:04,418 - __main__ - INFO - Sending hello message to server
+2025-03-21 08:48:04,422 - __main__ - INFO - Server acknowledged connection with welcome message
+2025-03-21 08:53:11,695 - __main__ - WARNING - Connection closed during receive
+2025-03-21 08:53:11,696 - __main__ - INFO - Reconnecting in 12.3 seconds (attempt 3/10)...
+2025-03-21 08:53:23,973 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:53:23,980 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:53:23,981 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:53:23,981 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:53:23,985 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:53:23,988 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:53:23,988 - __main__ - INFO - Reconnecting in 18.6 seconds (attempt 4/10)...
+2025-03-21 08:53:42,603 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:53:42,610 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:53:42,610 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:53:42,610 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:53:42,614 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:53:42,616 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:53:42,616 - __main__ - INFO - Reconnecting in 27.1 seconds (attempt 5/10)...
+2025-03-21 08:54:09,787 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:54:09,794 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:54:09,794 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:54:09,794 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:54:09,798 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:54:09,800 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:54:09,801 - __main__ - INFO - Reconnecting in 39.8 seconds (attempt 6/10)...
+2025-03-21 08:54:49,629 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:54:49,636 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:54:49,636 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:54:49,636 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:54:49,641 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:54:49,642 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:54:49,642 - __main__ - INFO - Reconnecting in 57.0 seconds (attempt 7/10)...
+2025-03-21 08:55:46,664 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:55:46,671 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:55:46,671 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:55:46,671 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:55:46,675 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:55:46,676 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:55:46,676 - __main__ - INFO - Reconnecting in 60.4 seconds (attempt 8/10)...
+2025-03-21 08:56:47,118 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:56:47,126 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:56:47,126 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:56:47,126 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:56:47,132 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:56:47,133 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:56:47,134 - __main__ - INFO - Reconnecting in 60.8 seconds (attempt 9/10)...
+2025-03-21 08:57:47,999 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:57:48,007 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:57:48,007 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:57:48,007 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:57:48,011 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:57:48,012 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:57:48,013 - __main__ - INFO - Reconnecting in 60.4 seconds (attempt 10/10)...
+2025-03-21 08:58:48,470 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 08:58:48,478 - __main__ - ERROR - Connectivity check failed: [Errno 111] Connection refused
+2025-03-21 08:58:48,478 - __main__ - WARNING - Server connectivity check failed, but still trying to connect...
+2025-03-21 08:58:48,478 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 08:58:48,482 - __main__ - ERROR - Failed to connect: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+2025-03-21 08:58:48,483 - __main__ - ERROR - Traceback (most recent call last):
+  File "/home/aaronlax/A2/client/client.py", line 88, in connect
+    self.websocket = await asyncio.wait_for(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 479, in wait_for
+    return fut.result()
+           ^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/tasks.py", line 684, in _wrap_awaitable
+    return (yield from awaitable.__await__())
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 541, in __await_impl__
+    self.connection = await self.create_connection()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aaronlax/A2/venv/lib/python3.11/site-packages/websockets/asyncio/client.py", line 467, in create_connection
+    _, connection = await loop.create_connection(factory, **kwargs)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1085, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 1069, in create_connection
+    sock = await self._connect_sock(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/base_events.py", line 973, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 634, in sock_connect
+    return await fut
+           ^^^^^^^^^
+  File "/usr/lib/python3.11/asyncio/selector_events.py", line 674, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('192.168.50.86', 5000)
+
+2025-03-21 08:58:48,484 - __main__ - ERROR - Exceeded maximum reconnect attempts (10), giving up
+2025-03-21 08:58:48,484 - __main__ - INFO - Shutting down...
+2025-03-21 08:58:48,484 - __main__ - INFO - Stopping client...
+2025-03-21 08:58:48,484 - hardware.camera.realsense_camera - INFO - Stopping RealSense camera streaming...
+2025-03-21 08:58:50,950 - hardware.camera.realsense_camera - INFO - RealSense camera streaming stopped
+2025-03-21 08:58:50,950 - __main__ - INFO - Shutdown complete
+2025-03-21 09:13:16,640 - __main__ - INFO - A2 Pi Client v1.0.0
+2025-03-21 09:13:16,640 - __main__ - INFO - Server: 192.168.50.86:5000
+2025-03-21 09:13:16,641 - __main__ - INFO - Simulation mode: False
+2025-03-21 09:13:16,641 - __main__ - INFO - Initializing system components...
+2025-03-21 09:13:16,641 - __main__ - INFO - Initializing camera...
+2025-03-21 09:13:16,641 - hardware.camera.realsense_camera - INFO - Initializing RealSense camera: 640x480@30fps
+2025-03-21 09:13:16,672 - hardware.camera.realsense_camera - INFO - Found 1 RealSense device(s)
+2025-03-21 09:13:17,263 - hardware.camera.realsense_camera - INFO - Using device: Intel RealSense D455
+2025-03-21 09:13:17,266 - __main__ - INFO - Camera initialized successfully
+2025-03-21 09:13:17,267 - hardware.camera.realsense_camera - INFO - Starting RealSense camera streaming...
+2025-03-21 09:13:17,937 - hardware.camera.realsense_camera - INFO - RealSense camera streaming started
+2025-03-21 09:13:17,937 - __main__ - INFO - Initializing servo controller...
+2025-03-21 09:13:17,938 - hardware.servo.controller - INFO - Initializing servo controller...
+2025-03-21 09:13:17,938 - hardware.servo.controller - INFO - Servo controller initialized
+2025-03-21 09:13:17,938 - __main__ - INFO - Servo controller initialized
+2025-03-21 09:13:17,938 - __main__ - INFO - Initializing audio detector...
+2025-03-21 09:13:17,938 - __main__ - ERROR - Failed to initialize audio detector: AudioDetector.__init__() got an unexpected keyword argument 'simulation_mode'
+2025-03-21 09:13:17,938 - __main__ - WARNING - Audio detection will not be available
+2025-03-21 09:13:17,938 - __main__ - INFO - Initializing WebSocket client...
+2025-03-21 09:13:17,939 - __main__ - INFO - Starting WebSocket client...
+2025-03-21 09:13:17,940 - __main__ - INFO - Resolved 192.168.50.86 to 192.168.50.86
+2025-03-21 09:13:17,944 - __main__ - INFO - Successfully connected to 192.168.50.86:5000
+2025-03-21 09:13:17,944 - __main__ - INFO - Connecting to ws://192.168.50.86:5000/pi...
+2025-03-21 09:13:17,970 - __main__ - INFO - Connected to WebSocket server successfully
+2025-03-21 09:13:17,970 - __main__ - INFO - Sending hello message to server
+2025-03-21 09:13:18,651 - __main__ - INFO - Server acknowledged connection with welcome message

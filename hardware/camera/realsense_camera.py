@@ -6,6 +6,7 @@ RealSense camera interface for the Pi client.
 import logging
 import numpy as np
 import time
+import cv2
 
 # Import RealSense SDK
 try:
@@ -39,6 +40,7 @@ class RealSenseCamera:
         self.pipeline = None
         self.config = None
         self.running = False
+        self.profile = None
         
     def initialize(self):
         """Initialize the camera resources."""
@@ -87,7 +89,7 @@ class RealSenseCamera:
                 self.config.enable_stream(rs.stream.depth, self.width, self.height, rs.format.z16, self.fps)
             
             # Start streaming
-            self.pipeline.start(self.config)
+            self.profile = self.pipeline.start(self.config)
             
             self.running = True
             self.logger.info("RealSense camera streaming started")
@@ -199,3 +201,141 @@ class RealSenseCamera:
                 self.logger.error(f"Error getting camera info: {e}")
         
         return info 
+
+    def get_depth_scale(self):
+        """Get the depth scale from the RealSense camera (meters per unit)"""
+        if self.simulation_mode:
+            return 0.001  # Default for simulation
+        
+        try:
+            if not self.profile:
+                return 0.001  # Default value
+            
+            # Get depth sensor and scale
+            depth_sensor = self.profile.get_device().first_depth_sensor()
+            depth_scale = depth_sensor.get_depth_scale()
+            
+            return depth_scale
+        except Exception as e:
+            self.logger.error(f"Error getting depth scale: {e}")
+            return 0.001  # Default value
+
+    def optimize_depth_for_transfer(self, depth_frame):
+        """
+        Optimize a depth frame for network transfer.
+        
+        This function can be used to reduce the size of depth data before
+        sending it over the network, while preserving depth values.
+        
+        Args:
+            depth_frame: Raw depth frame from RealSense
+            
+        Returns:
+            Optimized depth frame for transfer
+        """
+        if depth_frame is None:
+            return None
+        
+        try:
+            # Check for invalid/zero values
+            invalid_mask = depth_frame == 0
+            
+            # Scale to uint16 range for PNG compression
+            # This preserves depth precision while allowing for efficient PNG compression
+            depth_frame = depth_frame.astype(np.uint16)
+            
+            # Apply invalid mask back (important to keep zero as invalid)
+            depth_frame[invalid_mask] = 0
+            
+            return depth_frame
+        except Exception as e:
+            self.logger.error(f"Error optimizing depth frame: {e}")
+            return depth_frame
+
+    def apply_depth_filter(self, depth_frame):
+        """
+        Apply filters to depth frame to reduce noise and fill holes.
+        
+        Args:
+            depth_frame: Raw depth frame from RealSense
+            
+        Returns:
+            Filtered depth frame
+        """
+        if self.simulation_mode or depth_frame is None:
+            return depth_frame
+        
+        try:
+            import pyrealsense2 as rs
+            
+            # Create filters
+            dec_filter = rs.decimation_filter()  # Reduces resolution
+            spat_filter = rs.spatial_filter()    # Smooths and fills small holes
+            temp_filter = rs.temporal_filter()   # Reduces temporal noise
+            
+            # Convert numpy array to rs frame
+            depth_frame_rs = rs.depth_frame()
+            
+            # Apply filters
+            filtered_frame = dec_filter.process(depth_frame_rs)
+            filtered_frame = spat_filter.process(filtered_frame)
+            filtered_frame = temp_filter.process(filtered_frame)
+            
+            # Convert back to numpy array
+            filtered_depth = np.asanyarray(filtered_frame.get_data())
+            
+            return filtered_depth
+        except Exception as e:
+            self.logger.error(f"Error filtering depth frame: {e}")
+            return depth_frame
+
+    def compress_depth(self, depth_frame, quality=9):
+        """
+        Compress a depth frame for efficient network transmission.
+        
+        Args:
+            depth_frame: Depth frame as numpy array (uint16)
+            quality: PNG compression level (0-9)
+            
+        Returns:
+            Compressed depth frame as bytes
+        """
+        if depth_frame is None:
+            return None
+        
+        try:
+            # Ensure frame is uint16
+            if depth_frame.dtype != np.uint16:
+                depth_frame = depth_frame.astype(np.uint16)
+            
+            # Compress with PNG (best for depth data)
+            encode_param = [cv2.IMWRITE_PNG_COMPRESSION, quality]
+            _, compressed = cv2.imencode('.png', depth_frame, encode_param)
+            
+            return compressed.tobytes()
+        except Exception as e:
+            self.logger.error(f"Error compressing depth frame: {e}")
+            return None
+
+    def decompress_depth(self, compressed_bytes):
+        """
+        Decompress a depth frame from bytes.
+        
+        Args:
+            compressed_bytes: Compressed depth frame as bytes
+            
+        Returns:
+            Decompressed depth frame as numpy array
+        """
+        if compressed_bytes is None:
+            return None
+        
+        try:
+            # Decode PNG
+            data = np.frombuffer(compressed_bytes, dtype=np.uint8)
+            depth_frame = cv2.imdecode(data, cv2.IMREAD_UNCHANGED)
+            
+            return depth_frame
+        except Exception as e:
+            self.logger.error(f"Error decompressing depth frame: {e}")
+            return None 

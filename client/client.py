@@ -146,10 +146,15 @@ class WebSocketClient:
         
         while self.connected and not self.stopping:
             try:
-                # Get a frame from the camera
-                frame = self.camera.get_color_frame()
+                # Get frames from the camera
+                color_frame = self.camera.get_color_frame()
+                depth_frame = None
                 
-                if frame is None:
+                # Get depth frame if available
+                if hasattr(self.camera, 'get_depth_frame'):
+                    depth_frame = self.camera.get_depth_frame()
+                
+                if color_frame is None:
                     logger.warning("Failed to get frame from camera")
                     await asyncio.sleep(0.1)
                     continue
@@ -168,12 +173,12 @@ class WebSocketClient:
                     self.last_frame_time = now
                     
                     if use_binary_mode:
-                        # Send frame as binary data (much more efficient)
-                        await send_binary_frame(self.websocket, frame, self.frame_count)
+                        # Send frames as binary data (much more efficient)
+                        await self.send_binary_frame_with_depth(color_frame, depth_frame, self.frame_count)
                     else:
                         # Encode frame to JPEG
                         encode_params = [cv2.IMWRITE_JPEG_QUALITY, config.JPEG_QUALITY]
-                        ret, jpeg = cv2.imencode('.jpg', frame, encode_params)
+                        ret, jpeg = cv2.imencode('.jpg', color_frame, encode_params)
                         
                         if not ret:
                             logger.error("Failed to encode frame")
@@ -227,6 +232,99 @@ class WebSocketClient:
                 logger.error(f"Error in frame processing: {e}")
                 logger.error(traceback.format_exc())
                 await asyncio.sleep(0.5)
+    
+    async def send_binary_frame_with_depth(self, color_frame, depth_frame, frame_id):
+        """
+        Send color and depth frames as a single binary message
+        
+        Binary message format:
+        - Frame ID (4 bytes, uint32)
+        - Timestamp (4 bytes, float32)
+        - Color frame flag (1 byte, bool)
+        - Depth frame flag (1 byte, bool)
+        - Color frame length (4 bytes, uint32) - only if color frame flag is 1
+        - Color frame data (variable length) - only if color frame flag is 1
+        - Depth frame length (4 bytes, uint32) - only if depth frame flag is 1
+        - Depth frame data (variable length) - only if depth frame flag is 1
+        - Depth scale (4 bytes, float32) - only if depth frame flag is 1
+        """
+        try:
+            if not self.connected or not self.websocket:
+                return False
+                
+            # Prepare data
+            timestamp = time.time()
+            has_color = color_frame is not None
+            has_depth = depth_frame is not None
+            color_data = b''
+            depth_data = b''
+            depth_scale = 0.001  # Default value, override if available
+            
+            # Get depth scale if available
+            if hasattr(self.camera, 'get_depth_scale'):
+                depth_scale = self.camera.get_depth_scale()
+            
+            # Encode color frame to JPEG if available
+            if has_color:
+                encode_params = [cv2.IMWRITE_JPEG_QUALITY, config.JPEG_QUALITY]
+                ret, jpeg = cv2.imencode('.jpg', color_frame, encode_params)
+                if not ret:
+                    logger.error("Failed to encode color frame")
+                    has_color = False
+                else:
+                    color_data = jpeg.tobytes()
+            
+            # Encode depth frame to PNG if available (PNG better preserves depth values)
+            if has_depth:
+                # Convert to uint16 if not already
+                if depth_frame.dtype != np.uint16:
+                    # Scale to full uint16 range for better precision in PNG
+                    depth_frame = (depth_frame * 65535.0 / depth_frame.max()).astype(np.uint16)
+                
+                ret, png = cv2.imencode('.png', depth_frame)
+                if not ret:
+                    logger.error("Failed to encode depth frame")
+                    has_depth = False
+                else:
+                    depth_data = png.tobytes()
+            
+            # Prepare binary message
+            # Header (14 bytes base)
+            header = struct.pack('<If??', 
+                frame_id,             # 4 bytes: uint32 frame ID
+                timestamp,            # 4 bytes: float32 timestamp
+                has_color,            # 1 byte: bool has color
+                has_depth             # 1 byte: bool has depth
+            )
+            
+            body = b''
+            # Add color frame data if available
+            if has_color:
+                color_header = struct.pack('<I', len(color_data))  # 4 bytes: uint32 color data length
+                body += color_header + color_data
+            
+            # Add depth frame data if available
+            if has_depth:
+                depth_header = struct.pack('<I', len(depth_data))  # 4 bytes: uint32 depth data length
+                body += depth_header + depth_data
+                body += struct.pack('<f', depth_scale)  # 4 bytes: float32 depth scale
+            
+            # Combine and send
+            binary_message = header + body
+            await self.websocket.send(binary_message)
+            
+            logger.debug(f"Sent binary frame {frame_id} - color: {has_color}, depth: {has_depth}, " +
+                        f"size: {len(binary_message)} bytes")
+            return True
+            
+        except websockets.exceptions.ConnectionClosed:
+            logger.warning("Connection closed while sending binary frame")
+            self.connected = False
+            return False
+        except Exception as e:
+            logger.error(f"Error sending binary frame: {e}")
+            logger.error(traceback.format_exc())
+            return False
     
     async def send_telemetry(self):
         """Send periodic telemetry data"""
